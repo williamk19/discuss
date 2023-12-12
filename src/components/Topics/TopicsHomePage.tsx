@@ -1,3 +1,6 @@
+"use client";
+
+import { useSession } from "next-auth/react";
 import {
   Card,
   CardContent,
@@ -9,6 +12,8 @@ import {
 import TopicCreateForm from "./TopicCreateForm";
 
 export default function TopicsHomePage() {
+  const { data: session, status } = useSession();
+
   return (
     <Card className="w-[280px] shadow-md">
       <CardHeader>
@@ -17,7 +22,11 @@ export default function TopicsHomePage() {
       </CardHeader>
       <CardContent className="grid gap-4"></CardContent>
       <CardFooter>
-        <TopicCreateForm />
+        {session && status == "authenticated" ? (
+          <TopicCreateForm />
+        ) : (
+          <p className="text-sm text-gray-500">* Please sign in to create topic</p>
+        )}
       </CardFooter>
     </Card>
   );

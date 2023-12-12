@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import NavbarDropdown from "./NavbarDropdown";
 import { Skeleton } from "./ui/skeleton";
+import Link from "next/link";
 
 export default function NavbarAuth() {
   const session = useSession();
@@ -25,12 +26,11 @@ export default function NavbarAuth() {
         </>
       ) : (
         <>
-          <form action={actions.signIn}>
+          <Link href="/auth/signin">
             <Button type="submit" className="flex gap-2 shadow-md">
-              <FaGithub />
               Sign In
             </Button>
-          </form>
+          </Link>
         </>
       )}
     </>
