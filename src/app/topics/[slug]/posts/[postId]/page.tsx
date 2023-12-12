@@ -49,7 +49,10 @@ export default async function PostPage({ params }: PostPageProps) {
           postId={postId}
           slug={slug}
         />
-        <CommentList fetchData={() => fetchCommentsByPostId(postId)} />
+        <CommentList
+          slug={slug}
+          fetchData={() => fetchCommentsByPostId(postId)}
+        />
       </div>
     </div>
   );
