@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Providers from "@/app/providers";
 import "./globals.css";
 import { cn } from "@/utils/tw";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -24,7 +25,12 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="w-full flex justify-center">
+            <Navbar />
+          </div>
+          {children}
+        </Providers>
       </body>
     </html>
   );

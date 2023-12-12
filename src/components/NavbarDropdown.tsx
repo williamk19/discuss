@@ -33,9 +33,7 @@ export default function NavbarDropdown({ user }: NavbarDropdownProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
-          Sign Out
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()}>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
