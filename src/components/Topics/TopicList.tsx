@@ -4,7 +4,26 @@ import Link from "next/link";
 import { Badge } from "../ui/badge";
 
 export default async function TopicList() {
-  const topics = await db.topic.findMany({ take: 5 });
+  const topics = await db.topic.findMany({
+    take: 5,
+    orderBy: {
+      posts: {
+        _count: "desc",
+      },
+    },
+    // where: {
+    //   posts: {}
+    // },
+    // include: {
+    //   posts: {
+    //     orderBy: {
+    //       comments: {
+    //         _count: "asc",
+    //       },
+    //     },
+    //   },
+    // },
+  });
 
   return (
     <div className="flex flex-row gap-2 flex-wrap">

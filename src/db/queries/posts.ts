@@ -7,6 +7,22 @@ export type PostListData = Post & {
   _count: { comments: number };
 };
 
+export function fetchTrendingPost(): Promise<PostListData[]> {
+  return db.post.findMany({
+    take: 10,
+    include: {
+      topic: { select: { slug: true } },
+      user: { select: { name: true } },
+      _count: { select: { comments: true } },
+    },
+    orderBy: {
+      comments: {
+        _count: 'desc'
+      }
+    },
+  });
+}
+
 export function fetchPostsByTopicSlug(slug: string): Promise<PostListData[]> {
   return db.post.findMany({
     where: {
@@ -20,7 +36,7 @@ export function fetchPostsByTopicSlug(slug: string): Promise<PostListData[]> {
       _count: { select: { comments: true } },
     },
     orderBy: {
-      createdAt: "asc",
+      createdAt: "desc",
     },
   });
 }

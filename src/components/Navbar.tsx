@@ -5,7 +5,7 @@ import paths from "@/utils/path-helper";
 
 export default async function Navbar() {
   return (
-    <div className="w-full flex justify-center border border-gray-400 shadow">
+    <div className="z-50 w-full flex justify-center border border-gray-400 bg-white shadow">
       <div className="w-11/12 sm:w-5/4 md:w-3/4 max-w-screen-md flex justify-between py-4">
         <div className="h-full flex items-center gap-5">
           <Link href={paths.homePath()}>

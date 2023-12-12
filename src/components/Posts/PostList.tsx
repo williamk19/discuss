@@ -12,14 +12,20 @@ import paths from "@/utils/path-helper";
 
 interface PostListProps {
   fetchData: () => Promise<PostListData[]>;
+  showTags?: boolean;
 }
 
-export default async function PostList({ fetchData }: PostListProps) {
+export default async function PostList({
+  fetchData,
+  showTags = false,
+}: PostListProps) {
   const posts = await fetchData();
   const options: Intl.DateTimeFormatOptions = {
     day: "2-digit",
     month: "long",
     year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
   };
 
   return (
@@ -37,7 +43,7 @@ export default async function PostList({ fetchData }: PostListProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p>{post.content}</p>
+                <p className="text-sm">{post.content}</p>
               </CardContent>
               <CardFooter>
                 <div className="flex justify-between w-full">

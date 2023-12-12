@@ -1,24 +1,34 @@
-"use client";
-
-import { CommentWithAuthor } from "@/db/queries/comments";
+import {
+  CommentWithAuthor,
+  fetchCommentsByPostId,
+} from "@/db/queries/comments";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Image from "next/image";
 import CommentCreateForm from "./CommentCreateForm";
-import { useState } from "react";
 
 interface CommentCardProps {
-  comments: CommentWithAuthor[];
+  disableReply?: boolean;
+  comments?: CommentWithAuthor[];
   commentId: string;
   slug: string;
+  postId: string;
 }
 
-export default function CommentCard({
+export default async function CommentCard({
+  disableReply = false,
+  postId,
   slug,
-  comments,
   commentId,
 }: CommentCardProps) {
-  const [isReplyFormOpen, setIsReplyFormOpen] = useState(false);
+  const comments = await fetchCommentsByPostId(postId);
   const comment = comments.find((c) => c.id === commentId);
+  const dateFormat: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
 
   if (!comment) {
     return null;
@@ -28,6 +38,8 @@ export default function CommentCard({
   const renderedChildren = children.map((child) => {
     return (
       <CommentCard
+        postId={postId}
+        disableReply={true}
         slug={slug}
         key={child.id}
         commentId={child.id}
@@ -37,9 +49,9 @@ export default function CommentCard({
   });
 
   return (
-    <Card className="shadow-md mb-4 last-of-type:mb-0">
-      <CardHeader>
-        <div className="flex gap-4 mb-4">
+    <Card className="rounded-sm shadow-md mb-2 last-of-type:mb-0">
+      <CardHeader className="pb-4">
+        <div className="flex gap-4 mb-3">
           <Image
             src={comment.user.image || ""}
             alt="user image"
@@ -53,20 +65,17 @@ export default function CommentCard({
             </p>
             <p className="text-gray-900">{comment.content}</p>
           </div>
-          <p
-            className="text-sm text-gray-500 cursor-pointer"
-            onClick={() => setIsReplyFormOpen(!isReplyFormOpen)}
-          >
-            reply
+          <p className="text-xs font-semibold">
+            {comment.createdAt.toLocaleDateString("en-US", dateFormat)}
           </p>
         </div>
-        <div className={isReplyFormOpen ? "visible" : "hidden"}>
+        {!disableReply && (
           <CommentCreateForm
             slug={slug}
             postId={comment.postId}
             parentId={comment.id}
           />
-        </div>
+        )}
       </CardHeader>
       <CardContent>{renderedChildren}</CardContent>
     </Card>

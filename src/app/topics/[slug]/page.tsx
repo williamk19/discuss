@@ -25,22 +25,24 @@ export default async function TopicPage({ params }: TopicPageProps) {
 
   return (
     <>
-      <div className="w-full flex justify-center">
-        <div className="w-11/12 sm:w-5/4 md:w-3/4 max-w-screen-md flex justify-between gap-5 py-8">
+      <div className="w-full flex flex-col items-center">
+        <div className="w-11/12 sm:w-5/4 md:w-3/4 max-w-screen-md flex justify-between gap-5 pt-8 pb-4">
           <div className="max-w-lg">
             <div className="mb-8">
               <h1 className="text-2xl font-bold mb-2">{slug}</h1>
               <p>{topic.description}</p>
             </div>
-            <div className="">
-              <ScrollArea className="h-96 pr-5 overflow-visible" type="always">
-                <PostList fetchData={() => fetchPostsByTopicSlug(slug)} />
-              </ScrollArea>
-            </div>
           </div>
           <div className="max-w-sm">
             <PostCreateForm slug={slug} />
           </div>
+        </div>
+        <div className="w-11/12 sm:w-5/4 md:w-3/4 max-w-screen-md">
+          <ScrollArea className="h-96 pr-5 overflow-visible" type="always">
+            <PostList
+              fetchData={() => fetchPostsByTopicSlug(slug)}
+            />
+          </ScrollArea>
         </div>
       </div>
     </>

@@ -45,13 +45,16 @@ export default async function PostPage({ params }: PostPageProps) {
         </Link>
         <PostSingle post={post} />
         <CommentCreateForm
+          hideReply={true}
+          startOpen={true}
           commentCount={post._count.comments}
           postId={postId}
           slug={slug}
         />
         <CommentList
           slug={slug}
-          fetchData={() => fetchCommentsByPostId(postId)}
+          postId={postId}
+          // fetchData={() => fetchCommentsByPostId(postId)}
         />
       </div>
     </div>
