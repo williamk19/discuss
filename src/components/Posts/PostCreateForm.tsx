@@ -1,24 +1,28 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { FaPlus } from "react-icons/fa";
-import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogHeader,
-  DialogFooter,
-} from "../ui/dialog";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
-import { createTopic } from "@/actions";
-import FormButton from "../Core/FormButton";
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { FaPlus } from "react-icons/fa";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import FormButton from "@/components/Core/FormButton";
+import { createPost } from "@/actions";
 
-export default function TopicCreateForm() {
-  const [formState, action] = useFormState(createTopic, {
+interface PostCreateFormProps {
+  slug: string;
+}
+
+export default function PostCreateForm({slug}: PostCreateFormProps) {
+  const [formState, action] = useFormState(createPost.bind(null, slug), {
     errors: {},
   });
 
@@ -26,49 +30,49 @@ export default function TopicCreateForm() {
     <Dialog>
       <DialogTrigger asChild>
         <Button className="w-full">
-          <FaPlus className="mr-2 h-3 w-3" /> Create New Topic
+          <FaPlus className="mr-2 h-3 w-3" /> Create New Post
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form action={action}>
           <DialogHeader>
-            <DialogTitle>Add New Topics</DialogTitle>
+            <DialogTitle>Add New Post</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="flex flex-col items-start gap-1">
-              <Label htmlFor="name" className="text-right mb-3">
-                Topic Name
+              <Label htmlFor="title" className="text-right mb-3">
+                Post Title
               </Label>
               <Input
                 autoComplete="off"
-                id="name"
-                name="name"
-                placeholder="sports, politics, ..."
+                id="title"
+                name="title"
+                placeholder="Write Something..."
                 className={`${
-                  !!formState.errors.name && "border-2 border-red-400"
+                  !!formState.errors.title && "border-2 border-red-400"
                 }`}
               />
-              {!!formState.errors.name && (
+              {!!formState.errors.title && (
                 <p className="text-red-400 text-sm">
-                  {formState.errors.name?.join(", ")}
+                  {formState.errors.title?.join(", ")}
                 </p>
               )}
             </div>
             <div className="flex flex-col items-start gap-4">
-              <Label htmlFor="description" className="text-right">
-                Description
+              <Label htmlFor="content" className="text-right">
+                Content
               </Label>
               <Textarea
                 autoComplete="off"
-                id="description"
-                name="description"
+                id="content"
+                name="content"
                 className={`${
-                  !!formState.errors.description && "border-2 border-red-400"
+                  !!formState.errors.content && "border-2 border-red-400"
                 }`}
               />
-              {!!formState.errors.description && (
+              {!!formState.errors.content && (
                 <p className="text-red-400 text-sm">
-                  {formState.errors.description?.join(", ")}
+                  {formState.errors.content?.join(", ")}
                 </p>
               )}
             </div>
@@ -79,9 +83,7 @@ export default function TopicCreateForm() {
             </div>
           ) : null}
           <DialogFooter>
-            <FormButton>
-              Create Topics
-            </FormButton>
+            <FormButton>Create Topics</FormButton>
           </DialogFooter>
         </form>
       </DialogContent>

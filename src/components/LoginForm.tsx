@@ -28,7 +28,15 @@ export default function LoginForm() {
               Sign in with Google
             </Button>
           </form>
-          <Separator about="d" />
+          <div className="flex items-center justify-center w-full gap-3">
+            <div className="w-full">
+              <Separator />
+            </div>
+            or
+            <div className="w-full">
+              <Separator />
+            </div>
+          </div>
           <form action={signInGithub} className="w-full">
             <Button className="w-full">
               <FaGithub className="mr-2" />
