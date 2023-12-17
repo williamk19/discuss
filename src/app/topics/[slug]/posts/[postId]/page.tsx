@@ -1,11 +1,13 @@
 import CommentCreateForm from "@/components/Comments/CommentCreateForm";
 import CommentList from "@/components/Comments/CommentList";
 import PostSingle from "@/components/Posts/PostSingle";
+import PostSingleLoading from "@/components/Posts/PostSingleLoading";
 import { db } from "@/db";
-import { fetchCommentsByPostId } from "@/db/queries/comments";
 import paths from "@/utils/path-helper";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 
 interface PostPageProps {
@@ -15,23 +17,8 @@ interface PostPageProps {
   };
 }
 
-export default async function PostPage({ params }: PostPageProps) {
+export default function PostPage({ params }: PostPageProps) {
   const { postId, slug } = params;
-
-  const post = await db.post.findFirst({
-    where: {
-      id: postId,
-    },
-    include: {
-      topic: { select: { slug: true } },
-      user: { select: { name: true } },
-      _count: { select: { comments: true } },
-    },
-  });
-
-  if (!post) {
-    return notFound();
-  }
 
   return (
     <div className="w-full flex justify-center">
@@ -41,21 +28,19 @@ export default async function PostPage({ params }: PostPageProps) {
           href={paths.topicShowPath(slug)}
         >
           <FaArrowLeft className="w-3 h-3" />
-          Back to {slug} slug
+          Back to {slug} topic
         </Link>
-        <PostSingle post={post} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <PostSingle postId={postId} />
+        </Suspense>
         <CommentCreateForm
           hideReply={true}
           startOpen={true}
-          commentCount={post._count.comments}
+          commentCount={0}
           postId={postId}
           slug={slug}
         />
-        <CommentList
-          slug={slug}
-          postId={postId}
-          // fetchData={() => fetchCommentsByPostId(postId)}
-        />
+        <CommentList slug={slug} postId={postId} />
       </div>
     </div>
   );
