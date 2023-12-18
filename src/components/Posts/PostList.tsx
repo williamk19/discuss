@@ -9,6 +9,7 @@ import {
 } from "../ui/card";
 import Link from "next/link";
 import paths from "@/utils/path-helper";
+import { trimText } from '@/utils/string';
 
 interface PostListProps {
   fetchData: () => Promise<PostListData[]>;
@@ -43,7 +44,7 @@ export default async function PostList({
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm">{post.content}</p>
+                <p className="text-sm">{trimText(post.content)}</p>
               </CardContent>
               <CardFooter>
                 <div className="flex justify-between w-full">
