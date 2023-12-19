@@ -43,4 +43,5 @@ export const {
       return session;
     },
   },
+  secret: AUTH_SECRET,
 });
