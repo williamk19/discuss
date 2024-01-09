@@ -11,7 +11,7 @@ import TopicList from "./TopicList";
 
 export default function TopicsHomePage() {
   return (
-    <Card className="w-[280px] shadow-md">
+    <Card className="w-full md:w-[280px] shadow-md">
       <CardHeader>
         <CardTitle className="text-xl">Top Topics</CardTitle>
         <CardDescription>5 most trending topics right now!</CardDescription>

@@ -39,7 +39,6 @@ export const {
   ],
   callbacks: {
     async session({ session, user }: any) {
-      console.log(session, user);
       if (session && user) {
         session.user.id = user.id;
       }

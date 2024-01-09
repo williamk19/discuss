@@ -36,7 +36,7 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          <div className="fixed w-full flex justify-center">
+          <div className="fixed w-full flex justify-center z-50">
             <Navbar />
           </div>
           <div className="pt-16">{children}</div>

@@ -7,10 +7,10 @@ export default async function Home() {
   return (
     <>
       <div className="w-full flex justify-center">
-        <div className="w-11/12 sm:w-5/4 md:w-3/4 max-w-screen-md flex justify-between gap-6 py-8">
+        <div className="w-11/12 sm:w-5/4 md:w-3/4 max-w-screen-md flex justify-between gap-10 md:gap-6 py-8 flex-col-reverse md:flex-row">
           <div className="col-span-2 flex flex-col gap-5">
             <h1 className="text-xl font-bold">Trending Post</h1>
-            <ScrollArea className="h-96 pr-4" type="always">
+            <ScrollArea className="h-[77vh] md:h-96 pr-4" type="always">
               <PostList fetchData={() => fetchTrendingPost()} />
             </ScrollArea>
           </div>

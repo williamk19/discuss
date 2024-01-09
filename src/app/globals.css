@@ -79,3 +79,9 @@
   position: fixed !important;
   left: -2.7rem !important;
 }
+
+@media (max-width: 768px) {
+  [data-radix-popper-content-wrapper] {
+    left: -4% !important;
+  }
+}
